@@ -9,6 +9,7 @@ with open('processing/variable.json', 'r') as file:
 crs = variables['crs']
 algorithm = variables['algorithm']
 
+
 gdf_path = f'results/shapefiles/resultados_{algorithm}.shp'
 
 gdf = gpd.read_file(gdf_path)
@@ -26,7 +27,7 @@ def createMap(output_html="output_map.html"):
     # Create a Folium map with the center and zoom level
     mapa = folium.Map(location=[centroide.y, centroide.x], zoom_start=17, tiles=None)
 
-    # Add OpenStreetMap and Google Maps Satellite layers
+    # Add OpenStreetMap and Esri Satellite layers
     _add_layers(mapa)
 
     # Define color palette for different class IDs
@@ -56,21 +57,30 @@ def createMap(output_html="output_map.html"):
     return output_html
 
 def _add_layers(mapa):
-    # Add OpenStreetMap
     folium.TileLayer(
         tiles='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        attr='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        name='OpenStreetMap'
-    ).add_to(mapa)
-
-    # Add Google Maps Satellite tiles
-    google_maps_api_key = "YOUR_GOOGLE_MAPS_API_KEY"  # Replace with your actual Google Maps API key
+        attr='OpenStreetMap',
+        name='OpenStreetMap').add_to(mapa)
     folium.TileLayer(
-        tiles=f'https://mt1.google.com/vt/lyrs=s&x={{x}}&y={{y}}&z={{z}}&key={google_maps_api_key}',
-        attr='Map data &copy; <a href="https://www.google.com/intl/en/help/terms_maps/">Google</a>',
-        name='Google Satellite',
+        tiles='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        attr='Esri',
+        name='Esri Satellite',
         overlay=False
     ).add_to(mapa)
+
+# def _add_layers(mapa):
+#     folium.TileLayer(
+#         tiles='OpenStreetMap',
+#         name='OpenStreetMap',
+#         attr='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+#     ).add_to(mapa)
+
+#     # You can also add a simpler tiles option (e.g., Stamen Toner)
+#     folium.TileLayer(
+#         tiles='Stamen Toner',
+#         name='Toner',
+#         attr='Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under ODbL.'
+#     ).add_to(mapa)
 
 def _get_color(feature, paleta_cores):
     class_id = feature['properties']['class_id']
