@@ -9,11 +9,11 @@ with open('processing/variable.json', 'r') as file:
 crs = variables['crs']
 algorithm = variables['algorithm']
 
-gdf_path = f'results/shapefiles/resultados_{algorithm}.shp'
+gdf_path = f'results/shapefiles/outshape_{algorithm}.shp'
 
 gdf = gpd.read_file(gdf_path)
 
-def createMap(output_html="output_map.html"):
+def createMap(output_html="results/html/output_map.html"):
     
     gdf_reproj = gdf.to_crs(epsg=4326)
 
