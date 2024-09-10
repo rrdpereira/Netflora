@@ -2,6 +2,7 @@ import folium
 import geopandas as gpd
 import branca.colormap as cm
 import json
+import os
 
 with open('processing/variable.json', 'r') as file:
     variables = json.load(file)
@@ -12,6 +13,14 @@ algorithm = variables['algorithm']
 gdf_path = f'results/shapefiles/outshape_{algorithm}.shp'
 
 gdf = gpd.read_file(gdf_path)
+
+# Check if the directory exists, if not, create it
+html_directory = "results/html/"
+if not os.path.exists(html_directory):
+    os.makedirs(html_directory)
+    print(f"Directory {html_directory} created.")
+else:
+    print(f"Directory {html_directory} already exists.")
 
 def createMap(output_html="results/html/output_map.html"):
     

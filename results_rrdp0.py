@@ -177,8 +177,8 @@ def main():
 
     # Save to file
     gdf_nms_final = gdf_nms[['filename', 'class_id', 'name', 'sci_name', 'confidence', 'width_m', 'height_m', 'geometry']].copy()
-    gdf_nms_final.to_file(f'{output_shapefile_directory}/resultados_{algorithm}.shp')
-    gdf_nms_final.to_csv(os.path.join(output_csv_directory, f'resultados_{algorithm}.csv'), index=False)
+    gdf_nms_final.to_file(f'{output_shapefile_directory}/outshape_{algorithm}.shp')
+    gdf_nms_final.to_csv(os.path.join(output_csv_directory, f'outshape_{algorithm}.csv'), index=False)
 
     # Optionally generate and display graphics
     if args.graphics:

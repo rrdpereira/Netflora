@@ -1,0 +1,6 @@
+{
+    "crs": "EPSG:32719",
+    "algorithm": "Palmeiras",
+    "tile_size": 1536,
+    "overlap": 256
+}
